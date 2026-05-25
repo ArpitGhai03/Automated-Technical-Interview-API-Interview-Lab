@@ -138,7 +138,7 @@ code {
 
 .side-panels {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   min-height: 0;
 }
 
@@ -214,6 +214,11 @@ code {
 }
 
 .error-block {
+  border-color: var(--fail);
+  color: var(--fail);
+}
+
+.output-block.error {
   border-color: var(--fail);
   color: var(--fail);
 }

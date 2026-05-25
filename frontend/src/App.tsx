@@ -6,6 +6,7 @@ import { ProblemPrompt } from "./components/ProblemPrompt";
 import { Editor } from "./components/Editor";
 import { TestResults } from "./components/TestResults";
 import { ErrorPanel } from "./components/ErrorPanel";
+import { OutputPanel } from "./components/OutputPanel";
 
 const DEFAULT_CODE = `def two_sum(nums, target):
     # TODO: return indices of the two numbers that add up to target
@@ -49,6 +50,7 @@ export default function App() {
         <Editor value={code} language={language} onChange={setCode} />
         <aside className="side-panels">
           <TestResults submission={submission} loading={loading} />
+          <OutputPanel submission={submission} loading={loading} />
           <ErrorPanel submission={submission} requestError={requestError} />
         </aside>
       </main>
