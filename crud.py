@@ -23,9 +23,17 @@ def update_submission(
     submission: Submission,
     status: str,
     output: Optional[str],
+    runtime: Optional[float] = None,
+    test_passed: Optional[int] = None,
+    test_total: Optional[int] = None,
+    test_results: Optional[list] = None,
 ) -> Submission:
     submission.status = status
     submission.output = output
+    submission.runtime = runtime
+    submission.test_passed = test_passed
+    submission.test_total = test_total
+    submission.test_results = test_results
     db.commit()
     db.refresh(submission)
     return submission

@@ -5,5 +5,15 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    proxy: {
+      "/submit": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/submissions": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
   },
 });

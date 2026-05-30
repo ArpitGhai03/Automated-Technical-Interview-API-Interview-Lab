@@ -11,5 +11,9 @@ export interface SubmissionResponse {
   language: string;
   status: SubmissionStatus;
   output: string | null;
+  runtime?: number | null;
+  test_passed?: number | null;
+  test_total?: number | null;
+  test_results?: boolean[] | null;  // Individual test results
   created_at: string;
 }
