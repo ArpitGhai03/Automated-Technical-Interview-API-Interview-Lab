@@ -1,0 +1,20 @@
+# Sandbox image for executing untrusted candidate code.
+#
+# Build once (and after changing runner/*):
+#   docker build -t interview-executor -f Dockerfile.executor .
+#
+# sandbox.py launches this image ephemerally per submission with strict
+# resource and capability limits (--network none, --read-only, --cap-drop ALL,
+# --user nobody, ...). The image only needs the runner scripts + the Python
+# standard library (sqlite3 is part of stdlib), so there are no pip installs.
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /app
+COPY runner/ /app/
+
+# Defense in depth: default to a non-root user (the container is also launched
+# with --user nobody by the host).
+USER nobody

@@ -6,10 +6,13 @@ from models import Submission
 from schemas import SubmissionCreate
 
 
-def create_submission(db: Session, submission: SubmissionCreate) -> Submission:
+def create_submission(
+    db: Session, submission: SubmissionCreate, language: str
+) -> Submission:
     new_submission = Submission(
+        problem_id=submission.problem_id,
         code=submission.code,
-        language=submission.language,
+        language=language,
         status="pending",
     )
     db.add(new_submission)

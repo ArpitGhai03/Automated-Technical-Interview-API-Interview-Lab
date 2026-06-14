@@ -5,6 +5,7 @@ class Submission(Base):
     __tablename__ = "submissions"
 
     id = Column(Integer, primary_key=True, index=True)
+    problem_id = Column(String(64), nullable=True, index=True)
     code = Column(Text, nullable=False)
     language = Column(String(20))
     status = Column(String(20), default="pending")

@@ -6,6 +6,10 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
+      "/problems": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
       "/submit": {
         target: "http://localhost:8000",
         changeOrigin: true,
