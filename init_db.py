@@ -19,16 +19,22 @@ def main() -> None:
     with engine.connect() as conn:
         inspector = inspect(engine)
         
-        # Check if test_results column exists in submissions table
+        # Add any columns missing from an existing submissions table.
         if 'submissions' in inspector.get_table_names():
             columns = [c['name'] for c in inspector.get_columns('submissions')]
-            if 'test_results' not in columns:
-                print("Adding missing test_results column...")
-                conn.execute(text(
-                    "ALTER TABLE submissions ADD COLUMN test_results JSON"
-                ))
-                conn.commit()
-                print("Column test_results added successfully")
+            missing = {
+                'runtime': "ALTER TABLE submissions ADD COLUMN runtime DOUBLE PRECISION",
+                'test_passed': "ALTER TABLE submissions ADD COLUMN test_passed INTEGER",
+                'test_total': "ALTER TABLE submissions ADD COLUMN test_total INTEGER",
+                'test_results': "ALTER TABLE submissions ADD COLUMN test_results JSON",
+                'problem_id': "ALTER TABLE submissions ADD COLUMN problem_id VARCHAR(64)",
+            }
+            for column, ddl in missing.items():
+                if column not in columns:
+                    print(f"Adding missing {column} column...")
+                    conn.execute(text(ddl))
+                    conn.commit()
+                    print(f"Column {column} added successfully")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,14 @@
-import type { SubmissionRequest, SubmissionResponse } from "./types";
+import type { Problem, SubmissionRequest, SubmissionResponse } from "./types";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "";
+
+export async function getProblems(): Promise<Problem[]> {
+  const res = await fetch(`${API_URL}/problems`);
+  if (!res.ok) {
+    throw new Error(`API error ${res.status}: ${await res.text()}`);
+  }
+  return res.json();
+}
 
 export async function submitCode(
   req: SubmissionRequest,

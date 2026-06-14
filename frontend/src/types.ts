@@ -1,12 +1,21 @@
 export type SubmissionStatus = "pending" | "running" | "completed" | "error";
 
-export interface SubmissionRequest {
-  code: string;
+export interface Problem {
+  id: string;
+  title: string;
   language: string;
+  prompt: string;
+  starter_code: string;
+}
+
+export interface SubmissionRequest {
+  problem_id: string;
+  code: string;
 }
 
 export interface SubmissionResponse {
   id: number;
+  problem_id: string | null;
   code: string;
   language: string;
   status: SubmissionStatus;

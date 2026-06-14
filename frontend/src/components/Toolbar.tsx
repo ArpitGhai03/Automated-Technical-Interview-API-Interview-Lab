@@ -1,13 +1,19 @@
+import type { Problem } from "../types";
+
 interface ToolbarProps {
+  problems: Problem[];
+  problemId: string;
+  onProblemChange: (id: string) => void;
   language: string;
-  onLanguageChange: (lang: string) => void;
   onRun: () => void;
   loading: boolean;
 }
 
 export function Toolbar({
+  problems,
+  problemId,
+  onProblemChange,
   language,
-  onLanguageChange,
   onRun,
   loading,
 }: ToolbarProps) {
@@ -18,15 +24,24 @@ export function Toolbar({
         <h1 className="toolbar-title">Interview Lab</h1>
       </div>
       <div className="toolbar-right">
+        {language && <span className="lang-badge">{language.toUpperCase()}</span>}
         <select
           className="lang-select"
-          value={language}
-          onChange={(e) => onLanguageChange(e.target.value)}
-          disabled={loading}
+          value={problemId}
+          onChange={(e) => onProblemChange(e.target.value)}
+          disabled={loading || problems.length === 0}
         >
-          <option value="python">Python</option>
+          {problems.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.title}
+            </option>
+          ))}
         </select>
-        <button className="run-button" onClick={onRun} disabled={loading}>
+        <button
+          className="run-button"
+          onClick={onRun}
+          disabled={loading || problems.length === 0}
+        >
           {loading ? "Running…" : "▶ Run"}
         </button>
       </div>
